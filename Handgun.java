@@ -41,7 +41,13 @@ public class Handgun {
     }
 
     public void fire(){
-        System.out.println("Handgun -> fired...");
+        if (!magazine.magEmpty) {
+            System.out.println("Handgun -> fired...");
+            magazine.roundCount();
+        }
+        else {
+            System.out.println("Handgun did not fire... no ammo");
+        }
 
     }
 

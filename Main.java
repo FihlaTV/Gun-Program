@@ -9,6 +9,7 @@ public class Main {
     private static boolean b_racked = false;
     private static boolean firstPrompt = true;
 
+
     private static boolean isValidMenuOption(int option) {
         if (option < 0 || option > 6) {
             System.out.println("Enter a valid option");
@@ -50,8 +51,9 @@ public class Main {
         boolean quit = false;
         int choice;
         while (!quit) {
-            System.out.println("Enter your choice: " + " Enter 0 to see the menu options");
+
             do {
+                System.out.println("Enter your choice: " + " Enter 0 to see the menu options");
 
                 while (!scanner.hasNextInt()) {
                     System.out.println("Error! Integer only please");
@@ -70,8 +72,12 @@ public class Main {
                         break;
                     case 2:
                         if (b_shooterReady) {
-                            handgun.loadMagazine(); // this method loads the magazine with ammo
+                            //handgun.loadMagazine(); // this method loads the magazine with ammo
+                            magazine.loadMag();
+                            Magazine newMag = new Magazine(16,true);
+                            newMag.loadMag();
                             b_magLoaded = true;
+
                         } else {
                             System.out.println(handgun + " - " + "shooter must be ready");
                         }
@@ -94,16 +100,21 @@ public class Main {
                         }
                         break;
                     case 5:
+                       // int roundCount = 16;
                         if (b_shooterReady && b_magInserted && b_racked) {
                             handgun.triggerControl(); // this method pulls the trigger
                             handgun.fire(); // this method shows the gun has fired
+                            //magazine.roundCount();
+                           // roundCount = roundCount -1;
                         } else {
                             System.out.println(handgun + " - " + " no round chambered, cannot fire");
                         }
                         break;
                     case 6:
+
                         System.out.println("See you soon!");
                         quit = true;
+                        System.exit(0);
                         break;
 
                 }
@@ -125,12 +136,11 @@ public class Main {
 
     public static void secondMenuOption() {
 
-        System.out.println("Shooter ready? " + "Enter (1) for Yes or (2) for No?");
         int secondMenuOption =0;
         int choice;
 
         do{
-
+            System.out.println("Shooter ready? " + "Enter (1) for Yes or (2) for No?");
 
             while (!scanner.hasNextInt()) {
                 System.out.println("Error! Integer only please");
@@ -157,7 +167,6 @@ public class Main {
             }
 
 
-
         } while (!isValidSecondMenuOption(choice));
 
     }
@@ -165,6 +174,8 @@ public class Main {
 }
 
 
+// Note:  Make it so when the slide is racked, one round is removed from the magazine ie. 16 rounds in mag
+// is now 15.  Also, when the handgun is fired reduce magazine count by one. I'll need to use a simple int , with the sum minus the sum is incremented.
 
 
 

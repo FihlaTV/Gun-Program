@@ -1,7 +1,12 @@
 package com.pesante;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+
+    private static  List<Handgun> handguns = new ArrayList<Handgun>();
     private static Scanner scanner = new Scanner(System.in);
     private static boolean b_shooterReady = false;
     private static boolean b_magLoaded = false;
@@ -39,14 +44,21 @@ public class Main {
         Magazine magazine2 = new Magazine(10, false);
         Handgun handgun2 = new Handgun("Heckler and Koch", "VP9", ".40", slide, frame, magazine);
 
+
         Slide arPistolUpper = new Slide("Standard", 1, true, 14.5, true, true);
         Frame arPistolLower = new Frame(1, "Right handed", true);
         Magazine arMagazine = new Magazine(30, true);
         //ARPistol arpistol = new Handgun("DPMS","Panther",".223 / 5.56", arPistolUpper, arPistolLower,arMagazine);
         Handgun arPistol = new ARPistol("DPMS", "Panther", ".223 / 5.56", arPistolUpper, arPistolLower, arMagazine);
         //arPistol.getSpecs();
+        // testing adding a list of handguns.
+        handguns.add(handgun);
+        handguns.add(handgun2);
+        handguns.add(arPistol);
+        printList(handguns);
         handgun.getSpecs();
 
+        //handguns.add(new Handgun("HK","V","9mm",slide,frame,magazine));
 
         boolean quit = false;
         int choice;
@@ -168,6 +180,17 @@ public class Main {
 
 
         } while (!isValidSecondMenuOption(choice));
+
+    }
+
+    public static void printList(List<Handgun> list) {
+        Iterator iterator = list.iterator();
+        System.out.println("===========");
+        System.out.println("You have " + handguns.size() + " guns saved to your list..." + " "  + iterator.next().toString());
+        while(iterator.hasNext()) {
+            System.out.println(iterator.next().toString());
+        }
+        System.out.println("===========");
 
     }
 

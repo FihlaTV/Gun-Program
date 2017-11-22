@@ -1,5 +1,7 @@
 package com.pesante;
 
+import java.util.ArrayList;
+
 /**
  * Created by joepesante on 6/26/17.
  */
@@ -11,6 +13,7 @@ public class Handgun {
     private Slide slide;
     private Frame frame;
     private Magazine magazine;
+    private ArrayList<Handgun> handgunList;
 
     public String getManufacturer() {
         return manufacturer;
@@ -33,6 +36,7 @@ public class Handgun {
         this.slide = slide;
         this.frame = frame;
         this.magazine = magazine;
+        this.handgunList = new ArrayList<>();
     }
 
     public void getReady(){
@@ -52,7 +56,7 @@ public class Handgun {
     }
 
     public void getSpecs(){
-        System.out.println("This handgun is a " + manufacturer + " " + model + " " + " in " + caliber);
+        System.out.println("Your current handgun is a " + manufacturer + " " + model + " " + " in " + caliber);
 
     }
 
@@ -69,6 +73,21 @@ public class Handgun {
     }
 
 
+//    public void addHandgun(String handgunName) {
+//        this.handgunList.add(new Handgun(String manufacturer, String model, String caliber, Slide slide, Frame frame, Magazine magazine));
+//    }
 
 
+    @Override
+    public String toString() {
+        return "Handgun{" +
+                "manufacturer='" + manufacturer + '\'' +
+                ", model='" + model + '\'' +
+                ", caliber='" + caliber + '\'' +
+                ", slide=" + slide +
+                ", frame=" + frame +
+                ", magazine=" + magazine +
+                ", handgunList=" + handgunList +
+                '}';
+    }
 }

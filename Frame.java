@@ -6,7 +6,7 @@ package com.pesante;
 public class Frame {
 
     private int trigger;
-    private String magRelease; // right/left or ambidixtrous
+    private String magRelease; // right/left or ambidextrous
     private boolean safety; // yes or no
 
     public int getTrigger() {
@@ -17,7 +17,7 @@ public class Frame {
         return magRelease;
     }
 
-    public boolean isSafety() {
+    public boolean isSafetyOn() {
         return safety;
     }
 

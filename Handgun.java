@@ -12,7 +12,7 @@ public class Handgun {
     private String caliber;
     private Slide slide;
     private Frame frame;
-    private Magazine magazine;
+    //private Magazine magazine;
     private ArrayList<Handgun> handgunList;
 
     public String getManufacturer() {
@@ -29,13 +29,13 @@ public class Handgun {
 
 
 
-    public Handgun(String manufacturer, String model, String caliber, Slide slide, Frame frame, Magazine magazine) {
+    public Handgun(String manufacturer, String model, String caliber, Slide slide, Frame frame) {
         this.manufacturer = manufacturer;
         this.model = model;
         this.caliber = caliber;
         this.slide = slide;
         this.frame = frame;
-        this.magazine = magazine;
+        //this.magazine = magazine;
         this.handgunList = new ArrayList<>();
     }
 
@@ -45,13 +45,17 @@ public class Handgun {
     }
 
     public void fire(){
-        if (!magazine.magEmpty) {
+        if (Magazine.magCapacity >0) {
             System.out.println("Handgun -> fired...");
-            magazine.roundCount();
+            Magazine.magCapacity = Magazine.magCapacity -1;
+            Magazine.roundVerification();
+            System.out.println(Magazine.magCapacity + " rounds left in mag");
         }
-        else {
+
+        else { Magazine.isMagEmpty = true;
             System.out.println("Handgun did not fire... no ammo");
         }
+
 
     }
 
@@ -65,17 +69,18 @@ public class Handgun {
         System.out.println("handgun.triggerControl() called");
     }
 
-    public void loadMagazine() { magazine.loadMag();
-        System.out.println("handgun.loadMagazine() called. " + "Loaded " + magazine.getMagCapacity() + " " + caliber + "rounds");}
+//    public void loadMagazine() { magazine.loadMag();
+//        System.out.println("handgun.loadMagazine() called. " + "Loaded " + magazine.getMagCapacity() + " " + caliber + "rounds");}
 
-    public void insertMagazine(){
-        magazine.insertMag();
+    public static void insertMagazine(){
+        Magazine.insertMag();
     }
 
-
-//    public void addHandgun(String handgunName) {
-//        this.handgunList.add(new Handgun(String manufacturer, String model, String caliber, Slide slide, Frame frame, Magazine magazine));
+//    public static void loadMagazine() {
+//        Magazine.loadMag();
 //    }
+
+
 
 
     @Override
@@ -86,7 +91,7 @@ public class Handgun {
                 ", caliber='" + caliber + '\'' +
                 ", slide=" + slide +
                 ", frame=" + frame +
-                ", magazine=" + magazine +
+                //", magazine=" + Magazine +
                 ", handgunList=" + handgunList +
                 '}';
     }

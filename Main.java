@@ -39,17 +39,17 @@ public class Main {
 
         Slide slide = new Slide("Standard", 1, true, 4, true, false);
         Frame frame = new Frame(1, "Ambidextrous", false);
-        Magazine magazine = new Magazine(16, true);
-        Handgun handgun = new Handgun("Glock", "19 Gen 5", "9mm", slide, frame, magazine);
-        Magazine magazine2 = new Magazine(10, false);
-        Handgun handgun2 = new Handgun("Heckler and Koch", "VP9", ".40", slide, frame, magazine);
+        Magazine magazine = new Magazine(16);
+        Handgun handgun = new Handgun("Glock", "19 Gen 5", "9mm", slide, frame);
+        Magazine magazine2 = new Magazine(10);
+        Handgun handgun2 = new Handgun("Heckler and Koch", "VP9", ".40", slide, frame);
 
 
         Slide arPistolUpper = new Slide("Standard", 1, true, 14.5, true, true);
         Frame arPistolLower = new Frame(1, "Right handed", true);
-        Magazine arMagazine = new Magazine(30, true);
+        Magazine arMagazine = new Magazine(30);
         //ARPistol arpistol = new Handgun("DPMS","Panther",".223 / 5.56", arPistolUpper, arPistolLower,arMagazine);
-        Handgun arPistol = new ARPistol("DPMS", "Panther", ".223 / 5.56", arPistolUpper, arPistolLower, arMagazine);
+        Handgun arPistol = new ARPistol("DPMS", "Panther", ".223 / 5.56", arPistolUpper, arPistolLower);
         //arPistol.getSpecs();
         // testing adding a list of handguns.
         handguns.add(handgun);
@@ -82,23 +82,25 @@ public class Main {
                     case 1:
                         secondMenuOption();
                         break;
-                    case 2:
+                    case 2: // Need a parameter that resets the handgun.fire so once a mag is loaded again, it allows the handgun to fire
                         if (b_shooterReady) {
-                            //handgun.loadMagazine(); // this method loads the magazine with ammo
-                            magazine.loadMag();
-                            Magazine newMag = new Magazine(16,true);
+//                            magazine.loadMag(); // this method loads the magazine with ammo
+                            Magazine newMag = new Magazine(16); // note: newMag isn't in the handgun constructor
                             newMag.loadMag();
-                            b_magLoaded = true;
+//                            newMag.isMagEmpty = true;
+                                b_magLoaded = true;
+                                // newMag.isMagEmpty = false; // test
 
-                        } else {
-                            System.out.println(handgun + " - " + "shooter must be ready");
-                        }
+
+                            } else {
+                                System.out.println(handgun + " - " + "shooter must be ready");
+                            }
                         break;
                     case 3:
-                        if
-                                (b_shooterReady && b_magLoaded) {
+                        if (b_shooterReady && b_magLoaded) {
                             b_magInserted = true;
-                            handgun.insertMagazine(); // this method inserts the magazine
+
+                            handgun.insertMagazine(); // this method inserts the magazine into the frame.
                         } else {
                             System.out.println(handgun + " - " + " shooter must be ready and magazine must be loaded and inserted");
                         }
@@ -112,12 +114,11 @@ public class Main {
                         }
                         break;
                     case 5:
-                       // int roundCount = 16;
-                        if (b_shooterReady && b_magInserted && b_racked) {
+
+                        if (b_shooterReady && b_magInserted && b_racked)  {
                             handgun.triggerControl(); // this method pulls the trigger
                             handgun.fire(); // this method shows the gun has fired
-                            //magazine.roundCount();
-                           // roundCount = roundCount -1;
+
                         } else {
                             System.out.println(handgun + " - " + " no round chambered, cannot fire");
                         }
@@ -186,7 +187,8 @@ public class Main {
     public static void printList(List<Handgun> list) {
         Iterator iterator = list.iterator();
         System.out.println("===========");
-        System.out.println("You have " + handguns.size() + " guns saved to your list..." + " "  + iterator.next().toString());
+        System.out.println("You have " + handguns.size() + " guns saved to your list...\n" +
+                " "  + iterator.next().toString());
         while(iterator.hasNext()) {
             System.out.println(iterator.next().toString());
         }

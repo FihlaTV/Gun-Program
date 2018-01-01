@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by joepesante on 6/26/17.
  */
-public class Handgun {
+public class Handgun implements GunSafety {
 
     private String manufacturer;
     private String model;
@@ -68,18 +68,6 @@ public class Handgun {
         frame.triggerPulled();
         System.out.println("handgun.triggerControl() called");
     }
-
-//    public void loadMagazine() { magazine.loadMag();
-//        System.out.println("handgun.loadMagazine() called. " + "Loaded " + magazine.getMagCapacity() + " " + caliber + "rounds");}
-
-    public static void insertMagazine(){
-        Magazine.insertMag();
-    }
-
-//    public static void loadMagazine() {
-//        Magazine.loadMag();
-//    }
-
 
 
 

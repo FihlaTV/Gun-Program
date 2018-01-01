@@ -14,7 +14,6 @@ public class Main {
     private static boolean b_racked = false;
     private static boolean firstPrompt = true;
 
-
     private static boolean isValidMenuOption(int option) {
         if (option < 0 || option > 6) {
             System.out.println("Enter a valid option");
@@ -62,6 +61,7 @@ public class Main {
 
         boolean quit = false;
         int choice;
+        boolean reloaded = false;
         while (!quit) {
 
             do {
@@ -82,46 +82,67 @@ public class Main {
                     case 1:
                         secondMenuOption();
                         break;
-                    case 2: // Need a parameter that resets the handgun.fire so once a mag is loaded again, it allows the handgun to fire
+                    case 2:
+                        // Currently, if you reload the mag, you can move directly to handgun.fire, which is not the correct logic.
+                        // If entering case 2 a second time, require a insert magazine command (case 3), rack the slide (case 4, then fire.
+
                         if (b_shooterReady) {
-//                            magazine.loadMag(); // this method loads the magazine with ammo
+
                             Magazine newMag = new Magazine(16); // note: newMag isn't in the handgun constructor
                             newMag.loadMag();
-//                            newMag.isMagEmpty = true;
-                                b_magLoaded = true;
-                                // newMag.isMagEmpty = false; // test
+
+                            b_magLoaded = true;
 
 
-                            } else {
-                                System.out.println(handgun + " - " + "shooter must be ready");
-                            }
-                        break;
-                    case 3:
-                        if (b_shooterReady && b_magLoaded) {
-                            b_magInserted = true;
-
-                            handgun.insertMagazine(); // this method inserts the magazine into the frame.
                         } else {
-                            System.out.println(handgun + " - " + " shooter must be ready and magazine must be loaded and inserted");
+                            System.out.println(handgun + " - " + "shooter must be ready");
                         }
                         break;
+
+                    case 3:
+
+                            if (b_shooterReady && b_magLoaded) {
+                                b_magInserted = true;
+
+                                Magazine.insertMag(); // this method inserts the magazine into the frame.
+                            } else {
+                                System.out.println(handgun + " - " + " shooter must be ready and magazine must be loaded and inserted");
+                            }
+                            break;
+
                     case 4:
+
                         if (b_shooterReady && b_magInserted) {
                             b_racked = true;
                             handgun.getReady(); //this method racks the slide.
+
                         } else {
                             System.out.println(handgun + " - " + " magazine not inserted");
-                        }
+                                    }
+
+
                         break;
                     case 5:
+                            if (b_shooterReady && b_magInserted && b_racked) {
+                                handgun.triggerControl(); // this method pulls the trigger
+                                handgun.fire(); // this method shows the gun has fired
 
-                        if (b_shooterReady && b_magInserted && b_racked)  {
-                            handgun.triggerControl(); // this method pulls the trigger
-                            handgun.fire(); // this method shows the gun has fired
+                                if(Magazine.magCapacity == 0) {
+                                    b_magInserted = false;
+                                    b_racked = false;
+                                }
 
-                        } else {
-                            System.out.println(handgun + " - " + " no round chambered, cannot fire");
-                        }
+                               // *** need to reset booleans, however they should be reset after entering case 5 for the first time.
+                               // I could reset them with a round verification to round == 0, but if I reload when there are still 5 rounds
+                               // in the mag, it creates a bug in my logic.
+                               // b_magInserted = false;
+                               // b_racked = false;
+
+
+                            } else {
+                                System.out.println(handgun + " - " + " no round chambered, cannot fire");
+                            }
+
                         break;
                     case 6:
 
@@ -147,9 +168,8 @@ public class Main {
 
     }
 
-    public static void secondMenuOption() {
+    private static void secondMenuOption() {
 
-        int secondMenuOption =0;
         int choice;
 
         do{
@@ -169,6 +189,7 @@ public class Main {
                     b_shooterReady = true;
 //                    b_magInserted = true;   // removed these two and added further logic to menuOptions switch case 2-5
 //                    b_racked = true;
+                    GunSafety.practiceSafety();
                     break;
 
                 case 2:

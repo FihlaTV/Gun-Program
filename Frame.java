@@ -15,7 +15,7 @@ public class Frame {
 
     public String getMagRelease() {
         return magRelease;
-    }
+    } // mag release button on frame
 
     public boolean isSafetyOn() {
         return safety;
